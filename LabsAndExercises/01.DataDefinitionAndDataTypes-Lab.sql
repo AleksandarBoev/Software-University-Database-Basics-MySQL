@@ -4,24 +4,24 @@ CREATE DATABASE `gamebar`;
 USE `gamebar`;
 
 #01. Create Tables 
-CREATE TABLE `employees`(
-	`id` INT AUTO_INCREMENT,
+CREATE TABLE `employees` (
+    `id` INT AUTO_INCREMENT,
     `first_name` VARCHAR(50) NOT NULL,
     `last_name` VARCHAR(50) NOT NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `categories`(
-	`id` INT AUTO_INCREMENT,
+CREATE TABLE `categories` (
+    `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `products`(
-	`id` INT AUTO_INCREMENT,
+CREATE TABLE `products` (
+    `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     `category_id` INT NOT NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY (`id`)
 );
 
 #02. Insert Data in Tables 
