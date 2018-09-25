@@ -276,13 +276,13 @@ CREATE DATABASE `car_rental`;
 USE `car_rental`;
 
 #Judge code
-CREATE TABLE `categories`(
-	`id` INT AUTO_INCREMENT,
+CREATE TABLE `categories` (
+    `id` INT AUTO_INCREMENT,
     `category` VARCHAR(50) NOT NULL,
-    `daily_rate` DOUBLE (7, 2),
-    `weekly_rate` DOUBLE (8, 2),
-    `monthly_rate` DOUBLE (9, 2),
-    `weekend_rate` DOUBLE (8, 2),
+    `daily_rate` DOUBLE(7 , 2 ),
+    `weekly_rate` DOUBLE(8 , 2 ),
+    `monthly_rate` DOUBLE(9 , 2 ),
+    `weekend_rate` DOUBLE(8 , 2 ),
     CONSTRAINT `pk_categories` PRIMARY KEY (`id`)
 );
 
@@ -290,7 +290,7 @@ INSERT INTO `categories` (`category`) VALUES
 ('Category1'), ('Category2'), ('Category3');
 
 CREATE TABLE `cars` (
-	`id` INT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `plate_number` VARCHAR(12) NOT NULL,
     `make` VARCHAR(30) NOT NULL,
     `model` VARCHAR(20) NOT NULL,
@@ -300,9 +300,9 @@ CREATE TABLE `cars` (
     `picture` BLOB,
     `car_condition` VARCHAR(255),
     `avaliable` BOOL NOT NULL,
-    CONSTRAINT `pk_cars` PRIMARY KEY(`id`),
-    CONSTRAINT `fk_cars_categories` FOREIGN KEY(`category_id`)
-		REFERENCES `categories`(`id`)
+    CONSTRAINT `pk_cars` PRIMARY KEY (`id`),
+    CONSTRAINT `fk_cars_categories` FOREIGN KEY (`category_id`)
+        REFERENCES `categories` (`id`)
 );
 
 INSERT INTO `cars` (`plate_number`, `category_id`, `make`, `model`, `car_year`, `avaliable`) VALUES 
@@ -311,8 +311,8 @@ INSERT INTO `cars` (`plate_number`, `category_id`, `make`, `model`, `car_year`, 
 ('C3324SB', 1, 'Make3', 'Skoda', '2002', TRUE);
 
 
-CREATE TABLE `employees`(
-	`id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `employees` (
+    `id` INT NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(30) NOT NULL,
     `last_name` VARCHAR(30) NOT NULL,
     `title` VARCHAR(30) NOT NULL,
@@ -326,14 +326,14 @@ INSERT INTO `employees` (`first_name`, `last_name`, `title`) VALUES
 ('Gosho', 'Goshov', 'PC maintenance');
 
 CREATE TABLE `customers` (
-	`id` INT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `driver_licence_number` VARCHAR(20) NOT NULL,
     `full_name` VARCHAR(50) NOT NULL,
     `address` VARCHAR(40) NOT NULL,
     `city` VARCHAR(20) NOT NULL,
     `zip_code` VARCHAR(20) NOT NULL,
     `notes` TEXT,
-    CONSTRAINT `pk_customers` PRIMARY KEY(`id`)
+    CONSTRAINT `pk_customers` PRIMARY KEY (`id`)
 );
 
 INSERT INTO `customers` (`driver_licence_number`, `full_name`, `address`, `city`, `zip_code`) VALUES
@@ -342,12 +342,12 @@ INSERT INTO `customers` (`driver_licence_number`, `full_name`, `address`, `city`
 ('1234567', 'Names3', 'Address3', 'City3', '3333');
 
 CREATE TABLE `rental_orders` (
-	`id` INT NOT NULL AUTO_INCREMENT,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `employee_id` INT NOT NULL,
     `customer_id` INT NOT NULL,
     `car_id` INT NOT NULL,
     `car_condition` VARCHAR(255),
-    `tank_level` DOUBLE (5,2),
+    `tank_level` DOUBLE(5 , 2 ),
     `kilometrage_start` INT(7) UNSIGNED,
     `kilometrage_end` INT(7) UNSIGNED,
     `total_kilometrage` INT(7) UNSIGNED,
@@ -355,16 +355,16 @@ CREATE TABLE `rental_orders` (
     `end_date` DATE NOT NULL,
     `total_days` INT(5) UNSIGNED,
     `rate_applied` ENUM('daily_rate', 'weekly_rate', 'monthly_rate', 'weekend_rate') NOT NULL,
-    `tax_rate` DECIMAL (5, 2) UNSIGNED NOT NULL,
+    `tax_rate` DECIMAL(5 , 2 ) UNSIGNED NOT NULL,
     `order_status` TEXT NOT NULL,
     `notes` TEXT,
     CONSTRAINT `pk_rental_orders` PRIMARY KEY (`id`),
-    CONSTRAINT `fk_rental_orders_employees` FOREIGN KEY (`employee_id`) 
-		REFERENCES `employees`(`id`),
-	CONSTRAINT `fk_rental_orders_customers` FOREIGN KEY (`customer_id`)
-		REFERENCES `customers`(`id`),
-	CONSTRAINT `fk_rental_orders_cars` FOREIGN KEY (`car_id`)
-		REFERENCES `cars` (`id`)
+    CONSTRAINT `fk_rental_orders_employees` FOREIGN KEY (`employee_id`)
+        REFERENCES `employees` (`id`),
+    CONSTRAINT `fk_rental_orders_customers` FOREIGN KEY (`customer_id`)
+        REFERENCES `customers` (`id`),
+    CONSTRAINT `fk_rental_orders_cars` FOREIGN KEY (`car_id`)
+        REFERENCES `cars` (`id`)
 );
 
 INSERT INTO `rental_orders` 
@@ -390,7 +390,7 @@ USE `hotel`;
 
 #Judge Code
 CREATE TABLE `employees` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `first_name` VARCHAR(50) NOT NULL,
     `last_name` VARCHAR(50) NOT NULL,
     `title` VARCHAR(50) NOT NULL,
@@ -403,7 +403,7 @@ INSERT INTO `employees` (`first_name`, `last_name`, `title`) VALUES
 ('E', 'F', 'Meintenance');
 
 CREATE TABLE `customers` (
-	`account_number` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `account_number` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `first_name` VARCHAR(50) NOT NULL,
     `last_name` VARCHAR(50) NOT NULL,
     `phone_number` VARCHAR(50) NOT NULL,
@@ -419,7 +419,7 @@ INSERT INTO `customers` (`first_name`, `last_name`, `phone_number`, `emergency_n
 
 
 CREATE TABLE `room_status` (
-	`room_status` VARCHAR(50) NOT NULL PRIMARY KEY,
+    `room_status` VARCHAR(50) NOT NULL PRIMARY KEY,
     `notes` TEXT NOT NULL
 );
 
@@ -429,7 +429,7 @@ INSERT INTO `room_status`(`room_status`, `notes`) VALUES
 ('Not taken', 'Can be reserved and taken.');
 
 CREATE TABLE `room_types` (
-	`room_type` VARCHAR(50) NOT NULL PRIMARY KEY,
+    `room_type` VARCHAR(50) NOT NULL PRIMARY KEY,
     `notes` TEXT NOT NULL
 );
 
@@ -439,7 +439,7 @@ INSERT INTO `room_types`(`room_type`, `notes`) VALUES
 ('Small', 'Between 21 and 30 square meters inclusive');
 
 CREATE TABLE `bed_types` (
-	`bed_type` VARCHAR(50) NOT NULL PRIMARY KEY,
+    `bed_type` VARCHAR(50) NOT NULL PRIMARY KEY,
     `notes` TEXT NOT NULL
 );
 
@@ -449,15 +449,18 @@ INSERT INTO `bed_types`(`bed_type`, `notes`) VALUES
 ('Small', 'Kid size');
 
 CREATE TABLE `rooms` (
-	`room_number` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `room_number` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `room_type` VARCHAR(50) NOT NULL,
     `bed_type` VARCHAR(50) NOT NULL,
-    `rate` DOUBLE(6, 2) UNSIGNED NOT NULL,
+    `rate` DOUBLE(6 , 2 ) UNSIGNED NOT NULL,
     `room_status` VARCHAR(50) NOT NULL,
     `notes` TEXT,
-    FOREIGN KEY (`room_type`) REFERENCES `room_types`(`room_type`),
-    FOREIGN KEY (`bed_type`) REFERENCES `bed_types`(`bed_type`),
-    FOREIGN KEY (`room_status`) REFERENCES `room_status`(`room_status`)
+    FOREIGN KEY (`room_type`)
+        REFERENCES `room_types` (`room_type`),
+    FOREIGN KEY (`bed_type`)
+        REFERENCES `bed_types` (`bed_type`),
+    FOREIGN KEY (`room_status`)
+        REFERENCES `room_status` (`room_status`)
 );
 
 INSERT INTO `rooms`(`room_type`, `bed_type`, `rate`, `room_status`) VALUES
@@ -465,40 +468,45 @@ INSERT INTO `rooms`(`room_type`, `bed_type`, `rate`, `room_status`) VALUES
 ('Medium', 'Medium', 3.0, 'Taken'), 
 ('Small', 'Small', 3.0, 'Not taken');
 
-CREATE TABLE `payments`(
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `employee_id` INT NOT NULL, #foreign key
+CREATE TABLE `payments` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `employee_id` INT NOT NULL,
     `payment_date` DATE NOT NULL,
-    `account_number` INT NOT NULL, #foreign key
+    `account_number` INT NOT NULL,
     `first_date_occupied` DATE,
     `last_date_occpuied` DATE,
     `total_days` INT,
-    `amount_charged` DECIMAL(8, 2) DEFAULT 0.00,
-    `tax_rate` DOUBLE (5, 2),
-    `tax_amount` DOUBLE (5, 2),
-    `payment_total` DECIMAL(8, 2) NOT NULL,
+    `amount_charged` DECIMAL(8 , 2 ) DEFAULT 0.00,
+    `tax_rate` DOUBLE(5 , 2 ) NOT NULL,
+    `tax_amount` DOUBLE(5 , 2 ) NOT NULL,
+    `payment_total` DECIMAL(8 , 2 ) NOT NULL,
     `notes` TEXT,
-    FOREIGN KEY (`employee_id`) REFERENCES `employees`(`id`),
-    FOREIGN KEY (`account_number`) REFERENCES `customers`(`account_number`)
+    FOREIGN KEY (`employee_id`)
+        REFERENCES `employees` (`id`),
+    FOREIGN KEY (`account_number`)
+        REFERENCES `customers` (`account_number`)
 );
 
-INSERT INTO `payments`(`employee_id`, `payment_date`, `account_number`, `payment_total`) VALUES
-(1, '2018-09-25', 1, 234.87),
-(2, '2017-09-25', 2, 333.87),
-(3, '2016-09-25', 3, 444.87);
+INSERT INTO `payments`(`employee_id`, `payment_date`, `account_number`, `tax_rate`, `tax_amount`, `payment_total`) VALUES
+(1, '2018-09-25', 1, 10.0, 23.49, 234.87),
+(2, '2017-09-25', 2, 10.0, 33.39, 333.87),
+(3, '2016-09-25', 3, 10.0, 44.44, 444.87);
 
 CREATE TABLE `occupancies` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `employee_id` INT NOT NULL, #fk
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `employee_id` INT NOT NULL,
     `date_occupied` DATE NOT NULL,
-    `account_number` INT NOT NULL, #fk
-    `room_number` INT NOT NULL, #fk
-    `rate_applied` DOUBLE (6, 2),
-    `phone_charge` INT (3),
+    `account_number` INT NOT NULL,
+    `room_number` INT NOT NULL,
+    `rate_applied` DOUBLE(6 , 2 ),
+    `phone_charge` INT(3),
     `notes` TEXT,
-    FOREIGN KEY (`employee_id`) REFERENCES `employees`(`id`),
-    FOREIGN KEY (`account_number`) REFERENCES `customers`(`account_number`),
-    FOREIGN KEY (`room_number`) REFERENCES `rooms`(`room_number`)
+    FOREIGN KEY (`employee_id`)
+        REFERENCES `employees` (`id`),
+    FOREIGN KEY (`account_number`)
+        REFERENCES `customers` (`account_number`),
+    FOREIGN KEY (`room_number`)
+        REFERENCES `rooms` (`room_number`)
 );
 
 INSERT INTO `occupancies`(`employee_id`, `date_occupied`, `account_number`, `room_number`) VALUES
@@ -527,4 +535,128 @@ are always required and which are optional. Submit your CREATE TABLE and INSERT 
 check DB.
 */
 
+#14. Create SoftUni Database 
+#Setup
+CREATE DATABASE `soft_uni`;
 
+USE `soft_uni`;
+
+#Judge code
+CREATE TABLE `towns` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
+    CONSTRAINT `pk_towns` PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `addresses` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `address_text` VARCHAR(50) NOT NULL,
+    `town_id` INT NOT NULL,
+    CONSTRAINT `pk_addresses` PRIMARY KEY (`id`),
+    CONSTRAINT `fk_addresses_towns` FOREIGN KEY (`town_id`)
+        REFERENCES `towns` (`id`)
+);
+
+CREATE TABLE `departments` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50),
+    CONSTRAINT `pk_departments` PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `employees` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(30) NOT NULL,
+    `middle_name` VARCHAR(30) NOT NULL,
+    `last_name` VARCHAR(30) NOT NULL,
+    `job_title` VARCHAR(50) NOT NULL,
+    `department_id` INT NOT NULL,
+    `hire_date` DATE,
+    `salary` DECIMAL(7 , 2 ) NOT NULL,
+    `address_id` INT,
+    CONSTRAINT `pk_employees` PRIMARY KEY (`id`),
+    CONSTRAINT `fk_employees_departments` FOREIGN KEY (`department_id`)
+        REFERENCES `departments` (`id`),
+    CONSTRAINT `fk_employees_addresses` FOREIGN KEY (`address_id`)
+        REFERENCES `addresses` (`id`)
+);
+
+
+
+/*
+Now create bigger database called soft_uni. You will use database in the future tasks. It should hold information about
+•	towns (id, name)
+•	addresses (id, address_text, town_id)
+•	departments (id, name)
+•	employees (id, first_name, middle_name, last_name, job_title, department_id, hire_date, salary, address_id)
+Id columns are auto incremented starting from 1 and increased by 1 (1, 2, 3, 4…). 
+Make sure you use appropriate data types for each column. Add primary and foreign keys as constraints 
+for each table. Use only SQL queries. Consider which fields are always required and which are optional. 
+Submit your CREATE TABLE  statements as Run queries & check DB.
+*/
+
+#16. Basic Insert 
+INSERT INTO `towns` (`name`) VALUES ('Sofia'), ('Plovdiv'), ('Varna'), ('Burgas');
+INSERT INTO `departments` (`name`) 
+	VALUES ('Engineering'), ('Sales'), ('Marketing'), ('Software Development'), ('Quality Assurance');
+INSERT INTO `employees` (`first_name`, `middle_name`, `last_name`, `job_title`, `department_id`, `hire_date`, `salary`) VALUES
+('Ivan', 'Ivanov', 'Ivanov', '.NET Developer', 4, '2013-02-01', 3500.00),
+('Petar', 'Petrov', 'Petrov', 'Senior Engineer', 1,  '2004-03-02',	4000.00),
+('Maria', 'Petrova', 'Ivanova', 'Intern', 5, '2016-08-28',	525.25),
+('Georgi', 'Terziev', 'Ivanov', 'CEO',  2,	'2007-12-09', 3000.00),
+('Peter', 'Pan', 'Pan', 'Intern', 3, '2016-08-28',	599.88);
+
+/*
+Ivan Ivanov Ivanov	.NET Developer	Software Development	01/02/2013	3500.00
+Petar Petrov Petrov	Senior Engineer	Engineering	02/03/2004	4000.00
+Maria Petrova Ivanova	Intern	Quality Assurance	28/08/2016	525.25
+Georgi Terziev Ivanov	CEO	Sales	09/12/2007	3000.00
+Peter Pan Pan	Intern	Marketing	28/08/2016	599.88
+
+*/
+
+#17. Basic Select All Fields 
+SELECT * FROM `towns`;
+SELECT * FROM `departments`;
+SELECT * FROM `employees`;
+
+#18. Basic Select All Fields and Order Them 
+SELECT * FROM `towns`
+ORDER BY `name` ASC;
+    
+SELECT * FROM `departments`
+ORDER BY `name` ASC;
+
+SELECT * FROM `employees`
+ORDER BY `salary` DESC;
+
+#19. Basic Select Some Fields 
+SELECT `name` FROM `towns`
+ORDER BY `name` ASC;
+
+SELECT `name` FROM `departments`
+ORDER BY `name` ASC;
+
+SELECT `first_name`, `last_name`, `job_title`, `salary` FROM `employees`
+ORDER BY `salary` DESC;
+
+#20. Increase Employees Salary 
+UPDATE `employees`
+SET `salary` = `salary` + (`salary` * 0.1)
+#WHERE `salary` IS NOT NULL; #does not work for some reason, but seems like the best choice
+WHERE `id` > 0;
+
+SELECT `salary` FROM employees;
+
+#21. Decrease Tax Rate 
+#Setup
+USE `hotel`;
+
+#Judge code
+UPDATE `payments` 
+SET `tax_rate` = `tax_rate` - (`tax_rate` * 0.03)
+WHERE `id` > 0;
+
+SELECT `tax_rate` FROM `payments`;
+
+#22. Delete All Records 
+TRUNCATE `occupancies`;
