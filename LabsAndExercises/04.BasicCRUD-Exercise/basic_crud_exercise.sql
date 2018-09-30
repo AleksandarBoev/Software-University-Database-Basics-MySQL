@@ -112,8 +112,12 @@ SET `middle_name` = ''
 WHERE `middle_name` IS NULL;
 
 CREATE VIEW `v_employees_job_titles` AS
-SELECT concat_ws(' ', `first_name`, `middle_name`, `last_name`) AS 'full_name', `job_title` FROM `employees`; #IFNULL(middle_name, '')
-
+SELECT concat_ws(' ', `first_name`, `middle_name`, `last_name`) AS 'full_name', `job_title` FROM `employees`;
+/* Judge breaks for some reason from this better code:
+CREATE VIEW `v_employees_job_titles` AS
+SELECT CONCAT(`first_name`, ' ', IF (`middle_name` = NULL, '', CONCAT(`middle_name`, ' ')), `last_name`) AS 'full_name', 
+	`job_title` FROM `employees`; 
+*/
 #17. Distinct Job Titles 
 SELECT DISTINCT(`job_title`) AS 'Job_title' FROM `employees`
 ORDER BY `job_title` ASC;
@@ -131,7 +135,7 @@ LIMIT 7;
 #20. Increase Salaries 
 UPDATE `employees`
 SET `salary` = `salary` * 1.12
-WHERE `department_id` IN (1, 2, 4, 11); #can be done with join
+WHERE `department_id` IN (1, 2, 4, 11); #can be done with join to
 
 SELECT `salary` FROM `employees`
 LIMIT 1000;
@@ -153,6 +157,9 @@ LIMIT 30;
 
 #23. Countries and Currency (Euro / Not Euro)
 #Look for possible solution in lection 'Build in functions'
+SELECT `country_name`, `country_code`, IF (`currency_code` = 'EUR', 'Euro', 'Not Euro') AS 'currenty' 
+FROM `countries`
+ORDER BY `country_name` ASC;
 
 #24. All Diablo Characters 
 #Setup
