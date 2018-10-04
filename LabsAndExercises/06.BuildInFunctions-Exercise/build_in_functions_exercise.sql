@@ -105,4 +105,11 @@ SELECT `name`,
 FROM `games`
 LIMIT 1000;
 
-#16. Orders Table 
+#16. Orders Table
+#Setup 
+USE `orders`;
+
+#Judge code
+SELECT `product_name`, `order_date`, 
+(DATE_ADD(`order_date`, INTERVAL 3 DAY)) AS `pay_due`, 
+(DATE_ADD(`order_date`, INTERVAL 1 MONTH)) AS `deliver_due` FROM `orders`;
