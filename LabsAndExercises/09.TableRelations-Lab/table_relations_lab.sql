@@ -4,17 +4,17 @@ USE `tests`; #doesn't matter which db will be used for this task
 
 #Judge Code
 CREATE TABLE `mountains` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     CONSTRAINT `pk_mountains` PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `peaks` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     `mountain_id` INT NOT NULL,
     CONSTRAINT `pk_peaks` PRIMARY KEY (`id`),
-    CONSTRAINT `fk_peaks_mountains` FOREIGN KEY (`mountain_id`) REFERENCES `mountains`(`id`)
+    CONSTRAINT `fk_peaks_mountains` FOREIGN KEY (`mountain_id`) REFERENCES `mountains` (`id`)
 );
 
 #2. Trip Organization 
@@ -49,7 +49,7 @@ DROP TABLE `peaks`;
 DROP TABLE `mountains`;
 
 CREATE TABLE `mountains` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     CONSTRAINT `pk_mountains` PRIMARY KEY (`id`)
 );
@@ -94,22 +94,22 @@ USE `project_management`;
 
 #Judge code
 CREATE TABLE `employees` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `first_name` VARCHAR(30) NOT NULL,
-    `last_name` VARCHAR(30) NOT NULL, 
+    `last_name` VARCHAR(30) NOT NULL,
     `project_id` INT NOT NULL,
     CONSTRAINT `pk_employees` PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `projects` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `client_id` INT NOT NULL,
     `project_lead_id` INT NOT NULL,
-    CONSTRAINT `pk_projects` PRIMARY KEY (`id`) 
+    CONSTRAINT `pk_projects` PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `clients` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `client_name` VARCHAR(100) NOT NULL,
     `project_id` INT NOT NULL,
     CONSTRAINT `pk_clients` PRIMARY KEY (`id`)
