@@ -85,6 +85,35 @@ ORDER BY `deposit_group` DESC, `is_deposit_expired` ASC #flag is like a boolean
 LIMIT 1000;
 
 #12. Rich Wizard, Poor Wizard TODO *
+SELECT SUM(
+	SELECT 
+		AS `difference`
+	FROM `wizzard_deposits`
+)
+
+SELECT * FROM `wizzard_deposits`;
+
+SELECT 
+	`wd1`.`first_name` AS `host_wizard`,
+    `wd1`.`deposit_amount` AS `host_wizard_deposit`,
+    `inner_query`.`w2_first_name` AS `guest_wizard`,
+    `inner_query`.`w2_deposit_amount` AS `guest_wizard_deposit`
+FROM 
+	`wizzard_deposits` `wd1`, 
+    (SELECT 
+		`wd2`.`first_name` AS `w2_first_name`,
+        `wd2`.`deposit_amount` AS `w2_deposit_amount`
+	FROM `wizzard_deposits` `wd2`
+    WHERE `wd2`.`id` > 1) AS `inner_query`;
+    
+SELECT 
+	`wd1`.`first_name`,
+    `wd1`.`deposit_amount`,
+    `wd2`.`first_name`,
+    `wd2`.`deposit_amount`
+FROM `wizzard_deposits` `wd1`
+INNER JOIN `wizzard_deposits` `wd2`
+	ON `wd1`.`id` = `wd2`.`id` + 1;
 
 #13. Employees Minimum Salaries 
 #Setup
@@ -129,6 +158,18 @@ SELECT COUNT(`employee_id`) - COUNT(`manager_id`) AS `Employees without managers
 FROM `employees`; #COUNT(`manager_id`) ignores NULL values
 
 #17. 3rd Highest Salary TODO *
+SELECT *
+FROM
+	(SELECT
+		`department_id`
+		`third_highest_salary`
+	FROM `employees`
+	GROUP BY `department_id`
+	ORDER BY `salary` DESC
+	LIMIT 3) AS `inner_query`
+ORDER BY `third_highest_salary` ASC
+LIMIT 1;
+
 
 #18. Salary Challenge TODO *
 
