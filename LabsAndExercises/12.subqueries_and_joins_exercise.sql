@@ -156,10 +156,112 @@ FROM (
 	SELECT AVG(`salary`) AS `average_salary`
 	FROM `employees`
 	GROUP BY `department_id`
-) AS `inner_query`;
+) AS `outer_query`;
 
 #result of inner query --> a table with one column, named "average_salary", which contains doubles, which are
 #averages of the salaries of the departments. The outer query finds the minimal "average_salary" of the inner query.
+
+#12. Highest Peaks in Bulgaria 
+#Setup
+USE `geography`;
+
+#Judge code
+SELECT
+	`mc`.`country_code`,
+    `m`.`mountain_range`,
+    `p`.`peak_name`,
+    `p`.`elevation`
+FROM `mountains_countries` `mc`
+INNER JOIN `mountains` `m`
+	ON `mc`.`mountain_id` = `m`.`id`
+INNER JOIN `peaks` `p`
+	ON `m`.`id` = `p`.`mountain_id`
+WHERE `p`.`elevation` > 2835 AND `mc`.`country_code` = 'BG'
+ORDER BY `p`.`elevation` DESC
+LIMIT 1000;
+
+#13. Count Mountain Ranges 
+SELECT
+	`mc`.`country_code`,
+    COUNT(`mc`.`mountain_id`) AS `mountains_count`
+FROM `mountains_countries` `mc`
+INNER JOIN `countries` `c`
+	ON `c`.`country_code` = `mc`.`country_code`
+WHERE `c`.`country_name` IN ('United States', 'Russia', 'Bulgaria')
+GROUP BY `mc`.`country_code`
+ORDER BY `mountains_count` DESC;
+
+#14. Countries with Rivers 
+SELECT
+	`countr`.`country_name`,
+    `r`.`river_name`
+FROM `countries` `countr` 
+LEFT JOIN `countries_rivers` `cr`
+	ON `countr`.`country_code` = `cr`.`country_code`
+LEFT JOIN `rivers` `r`
+	ON `r`.`id` = `cr`.`river_id`
+INNER JOIN `continents` `cont`
+	ON `cont`.`continent_code` = `countr`.`continent_code`
+WHERE `cont`.`continent_name` = 'Africa'
+ORDER BY `countr`.`country_name` ASC
+LIMIT 5;
+
+/*
+	How the code works: LEFT JOIN table 'countries' with table `countries_rivers`. That means all records
+from 'countries' must be in the resulting table at least once, even if their id's are not in the 'countries_rivers'
+table. Resulting table is one with all countries, some of which don't have rivers and so they have NULL for river_id.
+	This resulting table is LEFT JOINED with 'rivers' table. That means all the records from the previous resulting
+table MUST be in the next resulting table at least once. 
+	After that a normal inner join and so on...
+*/
+
+#15. *Continents and Currencies - does not give 100/100
+SELECT * FROM (
+	SELECT 
+		`continent_code`,
+		`currency_code`,
+		COUNT(`currency_code`) AS `currency_code_usage`
+	FROM `countries`
+	GROUP BY `continent_code`, `currency_code`
+	ORDER BY `currency_code_usage` DESC
+) AS `outer_query`
+WHERE `currency_code_usage` > 1
+GROUP BY `continent_code`
+ORDER BY `continent_code` ASC, `currency_code` ASC;
+
+#16. Countries without any Mountains 
+SELECT COUNT(`country_code`) 
+FROM (
+	SELECT
+		`c`.`country_code`,
+        `mc`.`mountain_id`
+	FROM `countries` `c`
+    LEFT JOIN `mountains_countries` `mc`
+		ON `mc`.`country_code` = `c`.`country_code`
+    WHERE `mountain_id` IS NULL)
+ AS `outer_query`;
+ 
+ #17. Highest Peak and Longest River by Country 
+SELECT
+	`c`.`country_name`,
+    MAX(`p`.`elevation`) AS `highest_peak_elevation`,
+    MAX(`r`.`length`) AS `longest_river_length`
+FROM `countries` `c`
+INNER JOIN `mountains_countries` `mc`
+	ON `c`.`country_code` = `mc`.`country_code`
+INNER JOIN `mountains` `m`
+	ON `m`.`id` = `mc`.`mountain_id`
+INNER JOIN `peaks` `p`
+	ON `p`.`mountain_id` = `m`.`id`
+INNER JOIN `countries_rivers` `cr`
+	ON `cr`.`country_code` = `c`.`country_code`
+INNER JOIN `rivers` `r`
+	ON `r`.`id` = `cr`.`river_id`
+GROUP BY `c`.`country_code`
+ORDER BY `highest_peak_elevation` DESC, `longest_river_length` DESC
+LIMIT 5;
+
+#Display NULL when no data is available in some of the columns. --> not sure how to do it with so many joins
 
 
 
