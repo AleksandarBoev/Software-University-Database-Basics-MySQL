@@ -262,6 +262,3 @@ ORDER BY `highest_peak_elevation` DESC, `longest_river_length` DESC
 LIMIT 5;
 
 #Display NULL when no data is available in some of the columns. --> not sure how to do it with so many joins
-
-
-
